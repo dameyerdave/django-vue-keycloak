@@ -1,0 +1,9 @@
+django==5.0.4
+django_extensions==3.2.3
+django-cors-headers==4.3.1
+django-filter==24.2
+django-allauth[socialaccount]==0.62.1
+djangorestframework==3.15.1
+drf-schema-adapter==3.0.6
+gunicorn==22.0.0
+uvicorn==0.29.0

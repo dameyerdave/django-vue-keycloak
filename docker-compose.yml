@@ -1,0 +1,42 @@
+volumes:
+  keycloak:
+  api_static:
+services:
+  kc:
+    image: quay.io/keycloak/keycloak:24.0.3
+    ports:
+      - 8080:8080
+    volumes:
+      - keycloak:/opt/keycloak/data
+    env_file: .env
+    command: start-dev
+    networks:
+      default:
+        aliases:
+          - keycloak-7f000001.nip.io
+  api:
+    build:
+      context: api
+    volumes:
+      - ./api/app:/app
+      - api_static:/vol/static
+    ports:
+      - 5077:5000
+    env_file: .env
+  ui:
+    build:
+      context: ui
+    volumes:
+      - ./ui/app:/app
+    ports:
+      - 8077:8077
+    command:
+      - /bin/sh
+      - -c
+      - |
+        yarn
+        yarn quasar dev --host 0.0.0.0 --port 8077
+    networks:
+      default:
+        aliases:
+          - app-7f000001.nip.io
